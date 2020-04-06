@@ -1,0 +1,7 @@
+<canvas #canvas width="600" height="300"></canvas>
+<h2>Ants positions</h2>
+<div class="shipping-item" *ngFor="let shipping of antsData | async">
+  <span>{{ shipping.x }}</span>
+  <span>{{ shipping.y}}</span>
+  <span>{{shipping}}</span>
+</div>
