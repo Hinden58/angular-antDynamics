@@ -1,4 +1,36 @@
 {
-  "x" : 70,
-  "y" : 50
+  "environment" : {
+    "list_element" : [
+      {
+        "radius" : 5,
+        "capacity_oqp" : 3,
+        "capacity_max" : 10,
+        "position" : {
+          "x":15,
+          "y":60
+        },
+        "pheromone":{
+          "ph1" : 0,
+          "ph2" : 1,
+          "ph3" : 0
+        },
+        "list_animals":[
+          {
+            "life_now": 5, 
+            "life_max":20,
+            "size":10,
+            "damage":4,
+            "hunger_now":5,
+            "hunger_max":10,
+            "thirst_now":10,
+            "thirst_max":11,
+            "is_traveling":true
+          }
+        ]
+      }
+    ],
+    "list_anthill" : [
+
+    ]
+  }
 }
