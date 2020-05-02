@@ -1,5 +1,9 @@
  import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DataRecoveryService, Data } from './data-recovery.service'
+import { HttpClient } from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -14,7 +18,8 @@ export class CanvasComponent implements OnInit {
   private ants : Data
 
   constructor(
-    private dr : DataRecoveryService
+    private dr : DataRecoveryService,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -24,12 +29,10 @@ export class CanvasComponent implements OnInit {
     this.showData();
   }
 
-  getData() {
-    this.dr.recoverData()
-      .subscribe((data: Data) => this.ants = {
-          x: (data as any).x,
-          y: (data as any).y
-      });
+  getData() : Observable<Case[]> {
+    return this.http
+        .get(`assets/data.json/environment/list_element`)
+        .pipe(map(result=>result['list_element']))
   }
 
   showData() {
@@ -40,6 +43,17 @@ export class CanvasComponent implements OnInit {
     antImage.draw(150, 150);  
     antImage.draw(this.ants.x, this.ants.y); 
   }
+}
+
+export class Case{
+        radius;
+        capacity_oqp;
+        capacity_max;
+        x;
+        y;
+        ph1;
+        ph2;
+        ph3;
 }
 
 export class AntImage {

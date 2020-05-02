@@ -5,32 +5,22 @@
         "radius" : 5,
         "capacity_oqp" : 3,
         "capacity_max" : 10,
-        "position" : {
-          "x":15,
-          "y":60
-        },
-        "pheromone":{
-          "ph1" : 0,
-          "ph2" : 1,
-          "ph3" : 0
-        },
-        "list_animals":[
-          {
-            "life_now": 5, 
-            "life_max":20,
-            "size":10,
-            "damage":4,
-            "hunger_now":5,
-            "hunger_max":10,
-            "thirst_now":10,
-            "thirst_max":11,
-            "is_traveling":true
-          }
-        ]
+        "x":15,
+        "y":60,
+        "ph1" : 0,
+        "ph2" : 1,
+        "ph3" : 0
+      },
+      {
+        "radius" : 10,
+        "capacity_oqp" : 13,
+        "capacity_max" : 110,
+        "x":115,
+        "y":160,
+        "ph1" : 1,
+        "ph2" : 1,
+        "ph3" : 1
       }
-    ],
-    "list_anthill" : [
-
     ]
   }
 }
