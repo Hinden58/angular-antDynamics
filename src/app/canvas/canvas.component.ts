@@ -21,25 +21,25 @@ export class CanvasComponent implements OnInit {
     private dr : DataRecoveryService,
   ) { }
 
-  ngOnInit() {
-    this.getData();
+  async ngOnInit() {
+    await this.getData();
+    console.log("log ants: "+this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.showData();
   }
 
-  getData() {
-    this.dr.getData()
-    .subscribe(data => {
-      for (const d of (data as any)) {
-        this.ants.push({
-          x: d.x,
-          y: d.y
-        });
-      }
-      console.log("1st log : " + this.ants);
-    });
-    console.log("2nd log : " +this.ants);
-}
+  async getData() {
+    const tempData = await this.dr.getData()
+    .toPromise();
+    console.log(tempData);
+    for (const d of (tempData as any)) {
+      this.ants.push({
+        x: d.x,
+        y: d.y
+      });
+    }
+    console.log(this.ants)
+  }
 
   showData() {
     //console.log('Begin Draw');
