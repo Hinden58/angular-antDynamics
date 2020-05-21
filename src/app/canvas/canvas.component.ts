@@ -1,5 +1,5 @@
  import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DataRecoveryService, Data } from './data-recovery.service'
+import { DataRecoveryService} from './data-recovery.service'
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -23,7 +23,6 @@ export class CanvasComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-    console.log(this.ants);
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.showData();
   }
@@ -37,30 +36,23 @@ export class CanvasComponent implements OnInit {
           y: d.y
         });
       }
-      console.log(this.ants);
+      console.log("1st log : " + this.ants);
     });
+    console.log("2nd log : " +this.ants);
 }
 
   showData() {
-    //const id = requestAnimationFrame(this.animate);  
-    // Do stuff  
-    this.ctx.fillStyle = 'red';  
-    const antImage = new AntImage(this.ctx); 
-    antImage.draw(150, 150);  
-    antImage.draw(this.ants.x, this.ants.y); 
+    //console.log('Begin Draw');
+    for (const d of (this.ants as any)) {
+      //console.log('Next Draw')
+      this.ctx.fillStyle = 'red';  
+      const antImage = new AntImage(this.ctx); 
+      antImage.draw(150, 150);  
+      antImage.draw(d.x, d.y); 
+    }
   }
 }
 
-export class Case{
-        radius;
-        capacity_oqp;
-        capacity_max;
-        x;
-        y;
-        ph1;
-        ph2;
-        ph3;
-}
 
 export class AntImage {
   constructor(private ctx: CanvasRenderingContext2D) {}
@@ -69,12 +61,6 @@ export class AntImage {
     this.ctx.fillStyle = 'red';
     this.ctx.beginPath();
     this.ctx.ellipse(x, y, 2, 2, 0, 0, 2 * Math.PI);
-    this.ctx.fill();
-  }
-  drawA(a : Data) {
-    this.ctx.fillStyle = 'red';
-    this.ctx.beginPath();
-    this.ctx.ellipse(a.x, a.y, 2, 2, 0, 0, 2 * Math.PI);
     this.ctx.fill();
   }
 }
