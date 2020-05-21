@@ -15,11 +15,10 @@ export class CanvasComponent implements OnInit {
 @ViewChild('canvas', { static: true }) 
   private canvas: ElementRef<HTMLCanvasElement>;
   private ctx: CanvasRenderingContext2D;
-  private ants : Data
+  ants : any = [];
 
   constructor(
     private dr : DataRecoveryService,
-    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -29,11 +28,18 @@ export class CanvasComponent implements OnInit {
     this.showData();
   }
 
-  getData() : Observable<Case[]> {
-    return this.http
-        .get(`assets/data.json/environment/list_element`)
-        .pipe(map(result=>result['list_element']))
-  }
+  getData() {
+    this.dr.getData()
+    .subscribe(data => {
+      for (const d of (data as any)) {
+        this.ants.push({
+          x: d.x,
+          y: d.y
+        });
+      }
+      console.log(this.ants);
+    });
+}
 
   showData() {
     //const id = requestAnimationFrame(this.animate);  

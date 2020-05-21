@@ -1,26 +1,10 @@
-{
-  "environment" : {
-    "list_element" : [
-      {
-        "radius" : 5,
-        "capacity_oqp" : 3,
-        "capacity_max" : 10,
-        "x":15,
-        "y":60,
-        "ph1" : 0,
-        "ph2" : 1,
-        "ph3" : 0
-      },
-      {
-        "radius" : 10,
-        "capacity_oqp" : 13,
-        "capacity_max" : 110,
-        "x":115,
-        "y":160,
-        "ph1" : 1,
-        "ph2" : 1,
-        "ph3" : 1
-      }
-    ]
+[
+  {
+    "x" : 10,
+    "y" : 10
+  },
+  {
+    "x" : 300,
+    "y" : 10
   }
-}
+]
