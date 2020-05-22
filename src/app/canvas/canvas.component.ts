@@ -56,13 +56,37 @@ export class CanvasComponent implements OnInit {
 
 
 export class AntImage {
-  constructor(private ctx: CanvasRenderingContext2D) {}
+  constructor(private _ctx: CanvasRenderingContext2D) {}
 
   draw(x: number, y: number) {
-    this.ctx.fillStyle = 'red';
-    this.ctx.beginPath();
-    this.ctx.ellipse(x, y, 2, 2, 0, 0, 2 * Math.PI);
-    this.ctx.fill();
+    this._ctx.fillStyle = 'red';
+    this._ctx.beginPath();
+    this._ctx.ellipse(x, y, 2, 2, 0, 0, 2 * Math.PI);
+    this._ctx.fill();
   }
+
+  drawQueen(x: number, y: number) {
+    //this.ctx.fillStyle = 'fuchsia';
+    //this.ctx.fillRect(x, y, 5, 5);
+    this._ctx.beginPath();
+    this._ctx.fillStyle = 'fuchsia';
+    this._ctx.arc(x, y, 20, 0, (Math.PI/180)*360, false);
+    //this.ctx.fill();
+    this._ctx.stroke();
+    this._ctx.fill();
+    //this.ctx.closePath();
+  }
+
+  drawSoldier(x: number, y: number) {
+    this._ctx.fillStyle = 'orange';
+    this._ctx.fillRect(x, y, 3, 3);
+  }
+
+  drawWorker(x: number, y: number) {
+    this._ctx.fillStyle = 'navy';
+    this._ctx.fillRect(x, y, 3, 3);
+  }
+
+
 }
 
