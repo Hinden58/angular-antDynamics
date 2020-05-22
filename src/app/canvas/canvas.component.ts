@@ -35,7 +35,8 @@ export class CanvasComponent implements OnInit {
     for (const d of (tempData as any)) {
       this.ants.push({
         x: d.x,
-        y: d.y
+        y: d.y,
+        code : d.code
       });
     }
     console.log(this.ants)
