@@ -23,7 +23,7 @@ export class CanvasComponent implements OnInit {
 
   async ngOnInit() {
     await this.getData();
-    console.log("log ants: "+this.ants)
+    console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.showData();
   }
@@ -31,15 +31,15 @@ export class CanvasComponent implements OnInit {
   async getData() {
     const tempData = await this.dr.getData()
     .toPromise();
-    console.log(tempData);
+    //console.log(tempData);
     for (const d of (tempData as any)) {
       this.ants.push({
-        x: d.x,
-        y: d.y,
-        code : d.code
+        __class__: d.__class__,
+        _list_element: d.list_element,
+        _list_anthill : d.list_anthill
       });
     }
-    console.log(this.ants)
+    //console.log(this.ants)
   }
 
   showData() {
