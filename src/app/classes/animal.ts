@@ -17,7 +17,7 @@ export class Animal {
   _is_travelling : number;
   _ctx : CanvasRenderingContext2D;
 
-  constructor(element:number, x, y,
+  constructor(element:number, x:number, y:number,
   //path:Path,
    actualLife:number, maxLife:number, size:number, damage:number, actualHunger:number, maxHunger:number, actualThirst:number, maxThirst:number, is_travelling:number,  ctx : CanvasRenderingContext2D) {
     this._element_id = element;

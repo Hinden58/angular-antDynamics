@@ -1,5 +1,3 @@
-import { Position } from "./position";
-import { Pheromone } from "./pheromone";
 import { Animal } from "./animal";
 import { Path } from "./path";
 
