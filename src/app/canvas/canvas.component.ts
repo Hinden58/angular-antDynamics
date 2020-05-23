@@ -16,6 +16,9 @@ export class CanvasComponent implements OnInit {
   private canvas: ElementRef<HTMLCanvasElement>;
   private ctx: CanvasRenderingContext2D;
   ants : any = [];
+  //Variable for update cycle
+  interval;
+  timeleft = 5;
 
   constructor(
     private dr : DataRecoveryService,
@@ -23,15 +26,16 @@ export class CanvasComponent implements OnInit {
 
   async ngOnInit() {
     await this.getData();
-    console.log(this.ants)
+    //console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.startTimer();
+    //console.log("timer passed")
     this.showData();
   }
 
   async getData() {
     const tempData = await this.dr.getData()
     .toPromise();
-    //console.log(tempData);
     for (const d of (tempData as any)) {
       this.ants.push({
         __class__: d.__class__,
@@ -39,7 +43,17 @@ export class CanvasComponent implements OnInit {
         _list_anthill : d.list_anthill
       });
     }
-    //console.log(this.ants)
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if(this.timeleft > 0) {
+        this.timeleft--;
+      } else {
+        this.timeleft = 3;
+        console.log("new cycle")
+      }
+    },1000)
   }
 
   showData() {
