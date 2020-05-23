@@ -34,15 +34,27 @@ export class CanvasComponent implements OnInit {
   }
 
   async getData() {
-    const tempData = await this.dr.getData()
-    .toPromise();
+    try {
+       const tempData = await this.dr.getData().toPromise();
+       console.log(tempData)
+       for (const d of (tempData as any)) {
+        this.ants.push({
+          __class__: d.__class__,
+          _list_element: d.list_element,
+          _list_anthill : d.list_anthill
+        });
+      }
+    } catch (e) {
+        console.error(e);
+    }
+    /*const tempData = await this.dr.getData().toPromise();
     for (const d of (tempData as any)) {
       this.ants.push({
         __class__: d.__class__,
         _list_element: d.list_element,
         _list_anthill : d.list_anthill
       });
-    }
+    }*/
   }
 
   startTimer() {
@@ -51,7 +63,7 @@ export class CanvasComponent implements OnInit {
         this.timeleft--;
       } else {
         this.timeleft = 3;
-        console.log("new cycle")
+        //console.log("new cycle")
       }
     },1000)
   }

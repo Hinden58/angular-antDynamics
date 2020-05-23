@@ -5,7 +5,7 @@ export class DataRecoveryService {
 
   constructor(private http: HttpClient) { }
 
-  dataUrl = 'assets/Test.json';
+  dataUrl = 'assets/data.json';
 
   getData() {
     return this.http.get(this.dataUrl);
