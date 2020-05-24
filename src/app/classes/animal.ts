@@ -5,7 +5,7 @@ export class Animal {
   _element_id: number;
   _x;
   _y;
-  //_path : Path;
+  _path : number;
   _life_current : number;
   _life_max : number;
   _size : number;
@@ -18,12 +18,12 @@ export class Animal {
   _ctx : CanvasRenderingContext2D;
 
   constructor(element:number, x:number, y:number,
-  //path:Path,
+  path:number,
    actualLife:number, maxLife:number, size:number, damage:number, actualHunger:number, maxHunger:number, actualThirst:number, maxThirst:number, is_travelling:number,  ctx : CanvasRenderingContext2D) {
     this._element_id = element;
     this._x = x;
     this._y = y;
-    //this._path = path;
+    this._path = path;
     this._life_current = actualLife;
     this._life_max = maxLife;
     this._size = size;

@@ -10,12 +10,12 @@ export class Ant extends Animal {
   _age_current : number
   _role : Role;
 
-  constructor(element:number, x, y,
-  //path:Path,
+  constructor(element:number, x:number, y:number,
+   path:number,
    actualLife:number, maxLife:number, size:number, damage:number, actualHunger:number, maxHunger:number, actualThirst:number, maxThirst:number, is_travelling:number, home:Anthill, actual_age:number, max_age:number, role:Role, ctx : CanvasRenderingContext2D)
   {
     super(element, x, y,
-    // path, 
+    path, 
     actualLife, maxLife,size, damage, actualHunger, maxHunger, actualThirst, maxThirst, is_travelling, ctx);
     this._home = home;
     this._age_current = actual_age;

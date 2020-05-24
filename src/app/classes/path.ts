@@ -1,12 +1,11 @@
-import { Element } from "./element";
 
 export class Path {
-  _start : Element;
-  _end : Element;
+  _start : number;
+  _end : number;
   _cost : number;
   _capacity : number[];
 
-  constructor(start:Element, end:Element, cost:number, actual_capacity:number, max_capacity:number){
+  constructor(start:number, end:number, cost:number, actual_capacity:number, max_capacity:number){
     this._start = start;
     this._end = end;
     this._cost = cost;

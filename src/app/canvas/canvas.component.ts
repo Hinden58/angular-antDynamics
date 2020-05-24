@@ -40,7 +40,7 @@ export class CanvasComponent implements OnInit {
     await this.getData();
     console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
-    this.startTimer();
+    //this.startTimer();
     //console.log("timer passed")
     //this.showData();
   }
