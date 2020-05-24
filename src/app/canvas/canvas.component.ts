@@ -94,7 +94,8 @@ export class CanvasComponent implements OnInit {
       for(const a of d.list_animal){
         switch(a.__class__){
           case("Queen"): { 
-                //let animal : Queen = new Queen(eid,x,y,);
+                let app =  a.__parent__.__parent__;
+                let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,app);
                 console.log("Handeled : " + a.__class__) 
               break; 
           } 

@@ -6,8 +6,7 @@ import { Element } from "./element";
 
 export class Queen extends Ant {
   
-  constructor(element:number, x, y,
-  path:number, 
+  constructor(element:number, x, y , path:number, 
   actual_life:number, max_life:number, size:number, damage:number, actual_hunger:number, max_hunger:number, actual_thirst:number, max_thirst:number, is_travelling:number, home:Anthill, actual_age:number, max_age:number, role:Role, ctx : CanvasRenderingContext2D) {
 
     super(element, x, y, 
