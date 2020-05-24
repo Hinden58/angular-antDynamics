@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import { Animal } from '../classes/animal';
 import { Path } from '../classes/path';
 import { Element } from '../classes/element';
+import { Queen } from '../classes/queen';
 
 @Component({
   selector: 'app-canvas',
@@ -93,6 +94,7 @@ export class CanvasComponent implements OnInit {
       for(const a of d.list_animal){
         switch(a.__class__){
           case("Queen"): { 
+                //let animal : Queen = new Queen(eid,x,y,);
                 console.log("Handeled : " + a.__class__) 
               break; 
           } 
