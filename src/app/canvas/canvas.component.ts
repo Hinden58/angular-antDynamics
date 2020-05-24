@@ -3,6 +3,9 @@ import { DataRecoveryService} from './data-recovery.service'
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import { Animal } from '../classes/animal';
+import { Path } from '../classes/path';
+import { Element } from '../classes/element';
 
 @Component({
   selector: 'app-canvas',
@@ -15,10 +18,18 @@ export class CanvasComponent implements OnInit {
 @ViewChild('canvas', { static: true }) 
   private canvas: ElementRef<HTMLCanvasElement>;
   private ctx: CanvasRenderingContext2D;
+
+  //all simulation data
   ants : any = [];
+  
   //Variable for update cycle
   interval;
   timeleft = 5;
+
+  //simulation step Data
+  listElem: Element[];
+  listAnimal: Animal[];
+  listPath: Path[];
 
   constructor(
     private dr : DataRecoveryService,
@@ -30,9 +41,9 @@ export class CanvasComponent implements OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.startTimer();
     //console.log("timer passed")
-    this.showData();
+    //this.showData();
   }
-  
+
   async getData() {
     try {
        const tempData = await this.dr.getData().toPromise();
@@ -58,23 +69,47 @@ export class CanvasComponent implements OnInit {
   }
 
   startTimer() {
+    let i : number = 0;
+    this.simulationStep(this.ants[i])
     this.interval = setInterval(() => {
       if(this.timeleft > 0) {
         this.timeleft--;
       } else {
-        this.timeleft = 3;
-        //console.log("new cycle")
+        i++;
+        this.timeleft = 5;
+        this.simulationStep(this.ants[i])
+        //console.log(this.ants[i]);
+        
       }
     },1000)
   }
-
+  simulationStep(environment) {
+    for(const d of environment._list_element){
+      let animal_on_elem : Animal[];
+      let eid : number = d.id;
+      let x : number = d.position.x;
+      let y : number = d.position.y;
+      //console.log(x + ", " +y)
+      for(const a of d.list_animal){
+        switch(a.__class__){
+          case("Queen"): { 
+                console.log("Handeled : " + a.__class__) 
+              break; 
+          } 
+          default: { 
+                console.log("Not handeled : " + a.__class__) 
+              break; 
+          } 
+        }
+      }
+    }
+  }
   showData() {
     //console.log('Begin Draw');
     for (const d of (this.ants as any)) {
       //console.log('Next Draw')
       this.ctx.fillStyle = 'red';  
       const antImage = new AntImage(this.ctx); 
-      antImage.draw(150, 150);  
       antImage.draw(d.x, d.y); 
     }
   }
