@@ -1,5 +1,9 @@
  import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DataRecoveryService, Data } from './data-recovery.service'
+import { DataRecoveryService} from './data-recovery.service'
+import { HttpClient } from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -11,51 +15,104 @@ export class CanvasComponent implements OnInit {
 @ViewChild('canvas', { static: true }) 
   private canvas: ElementRef<HTMLCanvasElement>;
   private ctx: CanvasRenderingContext2D;
-  private ants : Data
+  ants : any = [];
+  //Variable for update cycle
+  interval;
+  timeleft = 5;
 
   constructor(
-    private dr : DataRecoveryService
+    private dr : DataRecoveryService,
   ) { }
 
-  ngOnInit() {
-    this.getData();
-    console.log(this.ants);
+  async ngOnInit() {
+    await this.getData();
+    //console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.startTimer();
+    //console.log("timer passed")
     this.showData();
   }
 
-  getData() {
-    this.dr.recoverData()
-      .subscribe((data: Data) => this.ants = {
-          x: (data as any).x,
-          y: (data as any).y
+  async getData() {
+    try {
+       const tempData = await this.dr.getData().toPromise();
+       console.log(tempData)
+       for (const d of (tempData as any)) {
+        this.ants.push({
+          __class__: d.__class__,
+          _list_element: d.list_element,
+          _list_anthill : d.list_anthill
+        });
+      }
+    } catch (e) {
+        console.error(e);
+    }
+    /*const tempData = await this.dr.getData().toPromise();
+    for (const d of (tempData as any)) {
+      this.ants.push({
+        __class__: d.__class__,
+        _list_element: d.list_element,
+        _list_anthill : d.list_anthill
       });
+    }*/
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if(this.timeleft > 0) {
+        this.timeleft--;
+      } else {
+        this.timeleft = 3;
+        //console.log("new cycle")
+      }
+    },1000)
   }
 
   showData() {
-    //const id = requestAnimationFrame(this.animate);  
-    // Do stuff  
-    this.ctx.fillStyle = 'red';  
-    const antImage = new AntImage(this.ctx); 
-    antImage.draw(150, 150);  
-    antImage.draw(this.ants.x, this.ants.y); 
+    //console.log('Begin Draw');
+    for (const d of (this.ants as any)) {
+      //console.log('Next Draw')
+      this.ctx.fillStyle = 'red';  
+      const antImage = new AntImage(this.ctx); 
+      antImage.draw(150, 150);  
+      antImage.draw(d.x, d.y); 
+    }
   }
 }
 
+
 export class AntImage {
-  constructor(private ctx: CanvasRenderingContext2D) {}
+  constructor(private _ctx: CanvasRenderingContext2D) {}
 
   draw(x: number, y: number) {
-    this.ctx.fillStyle = 'red';
-    this.ctx.beginPath();
-    this.ctx.ellipse(x, y, 2, 2, 0, 0, 2 * Math.PI);
-    this.ctx.fill();
+    this._ctx.fillStyle = 'red';
+    this._ctx.beginPath();
+    this._ctx.ellipse(x, y, 2, 2, 0, 0, 2 * Math.PI);
+    this._ctx.fill();
   }
-  drawA(a : Data) {
-    this.ctx.fillStyle = 'red';
-    this.ctx.beginPath();
-    this.ctx.ellipse(a.x, a.y, 2, 2, 0, 0, 2 * Math.PI);
-    this.ctx.fill();
+
+  drawQueen(x: number, y: number) {
+    //this.ctx.fillStyle = 'fuchsia';
+    //this.ctx.fillRect(x, y, 5, 5);
+    this._ctx.beginPath();
+    this._ctx.fillStyle = 'fuchsia';
+    this._ctx.arc(x, y, 20, 0, (Math.PI/180)*360, false);
+    //this.ctx.fill();
+    this._ctx.stroke();
+    this._ctx.fill();
+    //this.ctx.closePath();
   }
+
+  drawSoldier(x: number, y: number) {
+    this._ctx.fillStyle = 'orange';
+    this._ctx.fillRect(x, y, 3, 3);
+  }
+
+  drawWorker(x: number, y: number) {
+    this._ctx.fillStyle = 'navy';
+    this._ctx.fillRect(x, y, 3, 3);
+  }
+
+
 }
 

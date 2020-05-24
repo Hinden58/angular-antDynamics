@@ -25,7 +25,7 @@ import { DataRecoveryService } from './canvas/data-recovery.service'
     HelloComponent
   ],
   bootstrap: [ AppComponent ],
-  providers: [DataRecoveryService]
+  providers: [ DataRecoveryService ]
 })
 export class AppModule { }
 

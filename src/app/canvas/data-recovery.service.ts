@@ -5,15 +5,9 @@ export class DataRecoveryService {
 
   constructor(private http: HttpClient) { }
 
-  dataUrl = 'https://da2324e8.ngrok.io/sendjson/';
+  dataUrl = 'assets/data.json';
 
-  recoverData() {
-    return this.http.get<Data>(this.dataUrl);
+  getData() {
+    return this.http.get(this.dataUrl);
   }
-
-}
-
-export interface Data {
-  x: number;
-  y: number;
 }
