@@ -26,17 +26,17 @@ export class CanvasComponent implements OnInit {
 
   async ngOnInit() {
     await this.getData();
-    //console.log(this.ants)
+    console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.startTimer();
     //console.log("timer passed")
     this.showData();
   }
-
+  
   async getData() {
     try {
        const tempData = await this.dr.getData().toPromise();
-       console.log(tempData)
+       //console.log("Data : " + tempData)
        for (const d of (tempData as any)) {
         this.ants.push({
           __class__: d.__class__,
