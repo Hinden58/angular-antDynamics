@@ -7,6 +7,11 @@ import { Animal } from '../classes/animal';
 import { Path } from '../classes/path';
 import { Element } from '../classes/element';
 import { Queen } from '../classes/queen';
+import { Egg } from '../classes/egg';
+import { Soldier } from '../classes/soldier';
+import { Worker } from '../classes/worker';
+import { Role } from '../classes/role';
+import { componentFactoryResolverProviderDef } from '@angular/compiler/src/view_compiler/provider_compiler';
 
 @Component({
   selector: 'app-canvas',
@@ -40,7 +45,7 @@ export class CanvasComponent implements OnInit {
     await this.getData();
     console.log(this.ants)
     this.ctx = this.canvas.nativeElement.getContext('2d');
-    //this.startTimer();
+    this.startTimer();
     //console.log("timer passed")
     //this.showData();
   }
@@ -78,7 +83,7 @@ export class CanvasComponent implements OnInit {
       } else {
         i++;
         this.timeleft = 5;
-        this.simulationStep(this.ants[i])
+        //this.simulationStep(this.ants[i])
         //console.log(this.ants[i]);
         
       }
@@ -86,22 +91,51 @@ export class CanvasComponent implements OnInit {
   }
   simulationStep(environment) {
     for(const d of environment._list_element){
-      let animal_on_elem : Animal[];
+      let animal_on_elem : Animal[] = [];
       let eid : number = d.id;
       let x : number = d.position.x;
       let y : number = d.position.y;
       //console.log(x + ", " +y)
       for(const a of d.list_animal){
+        //TODO : Home, Path, Role
         switch(a.__class__){
           case("Queen"): { 
-                let app =  a.__parent__.__parent__;
-                let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,app);
-                console.log("Handeled : " + a.__class__) 
-              break; 
+              let app =  a.__parent__.__parent__;
+              let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+              animal_on_elem.concat(animal)
+              animal.draw()
+              console.log("Handeled : " + a.__class__) 
+            break; 
           } 
+          case("Egg"):{
+             let app =  a.__parent__.__parent__;
+             let animal : Egg = new Egg(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+             animal_on_elem.concat(animal)
+             animal.draw()
+             console.log("Handeled : " + a.__class__) 
+            break;
+          }
+          case("Soldier"):{
+            let app =  a.__parent__.__parent__;
+             let animal : Soldier = new Soldier(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+             animal_on_elem.concat(animal)
+             console.log(animal)
+             animal.draw()
+             console.log("Handeled : " + a.__class__) 
+            break;
+          }
+          case("Worker"):{
+            let app =  a.__parent__.__parent__;
+             let animal : Worker = new Worker(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,a.supply_capacity,this.ctx);
+             animal_on_elem.concat(animal)
+             console.log(animal)
+             animal.draw()
+             console.log("Handeled : " + a.__class__) 
+            break;
+          }
           default: { 
-                console.log("Not handeled : " + a.__class__) 
-              break; 
+            console.log("Not handeled : " + a.__class__) 
+            break; 
           } 
         }
       }
