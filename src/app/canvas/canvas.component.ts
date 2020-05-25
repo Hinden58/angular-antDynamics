@@ -90,8 +90,12 @@ export class CanvasComponent implements OnInit {
     },1000)
   }
   simulationStep(environment) {
+    let element_in_environment : Element[] = [];
+    let animal_in_environment : Animal[] = [];
+    let path_in_environment : Path[] = [];
     for(const d of environment._list_element){
       let animal_on_elem : Animal[] = [];
+      let path_from_elem : Path[] =[];
       let eid : number = d.id;
       let x : number = d.position.x;
       let y : number = d.position.y;
@@ -102,35 +106,35 @@ export class CanvasComponent implements OnInit {
           case("Queen"): { 
               let app =  a.__parent__.__parent__;
               let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
-              animal_on_elem.concat(animal)
+              animal_on_elem.push(animal)
               animal.draw()
-              console.log("Handeled : " + a.__class__) 
+              //console.log("Handeled : " + a.__class__) 
             break; 
           } 
           case("Egg"):{
              let app =  a.__parent__.__parent__;
              let animal : Egg = new Egg(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
-             animal_on_elem.concat(animal)
+             animal_on_elem.push(animal)
              animal.draw()
-             console.log("Handeled : " + a.__class__) 
+             //console.log("Handeled : " + a.__class__) 
             break;
           }
           case("Soldier"):{
             let app =  a.__parent__.__parent__;
              let animal : Soldier = new Soldier(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
-             animal_on_elem.concat(animal)
-             console.log(animal)
+             animal_on_elem.push(animal)
+             //console.log(animal)
              animal.draw()
-             console.log("Handeled : " + a.__class__) 
+             //console.log("Handeled : " + a.__class__) 
             break;
           }
           case("Worker"):{
             let app =  a.__parent__.__parent__;
              let animal : Worker = new Worker(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,a.supply_capacity,this.ctx);
-             animal_on_elem.concat(animal)
-             console.log(animal)
+             animal_on_elem.push(animal)
+             //console.log(animal)
              animal.draw()
-             console.log("Handeled : " + a.__class__) 
+             //console.log("Handeled : " + a.__class__) 
             break;
           }
           default: { 
@@ -139,7 +143,20 @@ export class CanvasComponent implements OnInit {
           } 
         }
       }
+      for(const p of d.list_path){
+        let path : Path = new Path(p.id,p.start,p.end,p.cost,p.capacity,p.capacity_max);
+        path_from_elem.push(path);
+        //console.log(path_from_elem)
+      }
+      let element : Element = new Element(d.id,d.radius,d.capacity,d.capacity_max,x,y,d.pheromone.pheromone_danger,d.pheromone.pheromone_food,d.pheromone.pheromone_recruit,animal_on_elem,path_from_elem,this.ctx);
+      console.log(element)
+      element_in_environment.push(element);
+      animal_in_environment=animal_in_environment.concat(animal_on_elem);
+      path_in_environment=path_in_environment.concat(path_from_elem);
     }
+    console.log(element_in_environment)
+    console.log(animal_in_environment)
+    console.log(path_in_environment)
   }
   showData() {
     //console.log('Begin Draw');

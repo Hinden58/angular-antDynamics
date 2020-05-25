@@ -2,6 +2,7 @@ import { Animal } from "./animal";
 import { Path } from "./path";
 
 export class Element {
+  _id : number;
   _radius : number;
   _capacity_current : number;
   _capacity_max : number;
@@ -14,9 +15,10 @@ export class Element {
   _list_path : Path[];
   _ctx : CanvasRenderingContext2D;
 
-  constructor(radius:number, actual_capacity:number, max_capacity:number, x ,y , pheromone_danger:number , pheromone_food, pheromone_recruit, list_animal:Animal[], 
+  constructor(id:number,radius:number, actual_capacity:number, max_capacity:number, x ,y , pheromone_danger:number , pheromone_food, pheromone_recruit, list_animal:Animal[], 
   list_path:Path[],
    ctx: CanvasRenderingContext2D) {
+     this._id = id;
     this._radius = radius;
     this._capacity_current = actual_capacity;
     this._capacity_max = max_capacity;
