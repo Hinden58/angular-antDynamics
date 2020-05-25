@@ -12,6 +12,7 @@ import { Soldier } from '../classes/soldier';
 import { Worker } from '../classes/worker';
 import { Role } from '../classes/role';
 import { componentFactoryResolverProviderDef } from '@angular/compiler/src/view_compiler/provider_compiler';
+import { Anthill } from '../classes/anthill';
 
 @Component({
   selector: 'app-canvas',
@@ -93,6 +94,7 @@ export class CanvasComponent implements OnInit {
     let element_in_environment : Element[] = [];
     let animal_in_environment : Animal[] = [];
     let path_in_environment : Path[] = [];
+    let anthill_in_environment : Anthill[] = [];
     for(const d of environment._list_element){
       let animal_on_elem : Animal[] = [];
       let path_from_elem : Path[] =[];
@@ -153,10 +155,24 @@ export class CanvasComponent implements OnInit {
       element_in_environment.push(element);
       animal_in_environment=animal_in_environment.concat(animal_on_elem);
       path_in_environment=path_in_environment.concat(path_from_elem);
+    
+    }
+    for(const la of environment._list_anthill){
+      let entrances : number[] = [];
+      let colony : number[] = [];
+      for(const e of la.entrance){
+        entrances.push(e.id);
+      }
+      for(const c of la.colony){
+        colony.push(c.__parent__.__parent__.id)
+      }
+      let anthill : Anthill = new Anthill(la.name,entrances,colony,la.storage[0],la.storage[1]);
+      anthill_in_environment.push(anthill)
     }
     console.log(element_in_environment)
     console.log(animal_in_environment)
     console.log(path_in_environment)
+    console.log(anthill_in_environment)
   }
   showData() {
     //console.log('Begin Draw');
