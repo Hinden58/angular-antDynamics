@@ -110,7 +110,7 @@ export class CanvasComponent implements OnInit {
               let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,a.__parent__.home,a.__parent__.age,a.__parent__.age_max,this.getRole(a.__parent__.role),this.ctx);
               animal_on_elem.push(animal)
               animal.draw()
-              /console.log(animal) 
+              //console.log(animal) 
             break; 
           } 
           case("Egg"):{
