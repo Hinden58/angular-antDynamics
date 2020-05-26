@@ -103,19 +103,19 @@ export class CanvasComponent implements OnInit {
       let y : number = d.position.y;
       //console.log(x + ", " +y)
       for(const a of d.list_animal){
-        //TODO : Home, Path, Role
+        //TODO : Path, Role
         switch(a.__class__){
           case("Queen"): { 
               let app =  a.__parent__.__parent__;
-              let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+              let animal : Queen = new Queen(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,a.__parent__.home,a.__parent__.age,a.__parent__.age_max,this.getRole(a.__parent__.role),this.ctx);
               animal_on_elem.push(animal)
               animal.draw()
-              //console.log("Handeled : " + a.__class__) 
+              /console.log(animal) 
             break; 
           } 
           case("Egg"):{
              let app =  a.__parent__.__parent__;
-             let animal : Egg = new Egg(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+             let animal : Egg = new Egg(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,a.__parent__.home,a.__parent__.age,a.__parent__.age_max,this.getRole(a.__parent__.role),this.ctx);
              animal_on_elem.push(animal)
              animal.draw()
              //console.log("Handeled : " + a.__class__) 
@@ -123,7 +123,7 @@ export class CanvasComponent implements OnInit {
           }
           case("Soldier"):{
             let app =  a.__parent__.__parent__;
-             let animal : Soldier = new Soldier(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,this.ctx);
+             let animal : Soldier = new Soldier(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,a.__parent__.home,a.__parent__.age,a.__parent__.age_max,this.getRole(a.__parent__.role),this.ctx);
              animal_on_elem.push(animal)
              //console.log(animal)
              animal.draw()
@@ -132,7 +132,7 @@ export class CanvasComponent implements OnInit {
           }
           case("Worker"):{
             let app =  a.__parent__.__parent__;
-             let animal : Worker = new Worker(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,"TODO",a.__parent__.age,a.__parent__.age_max,Role.ATTACK,a.supply_capacity,this.ctx);
+             let animal : Worker = new Worker(eid, x, y, 0, app.life, app.life_max,app.size,app.damage, app.hunger,app.hunger_max,app.thirst,app.thirst_max,app.is_travelling,a.__parent__.home,a.__parent__.age,a.__parent__.age_max,this.getRole(a.__parent__.role),a.supply_capacity,this.ctx);
              animal_on_elem.push(animal)
              //console.log(animal)
              animal.draw()
@@ -181,6 +181,28 @@ export class CanvasComponent implements OnInit {
       this.ctx.fillStyle = 'red';  
       const antImage = new AntImage(this.ctx); 
       antImage.draw(d.x, d.y); 
+    }
+  }
+  getRole(s : String){
+    switch(s){
+      case("Role.PASSIVE"):{
+        return Role.PASSIVE;
+      }
+      case("Role.ATTACK"):{
+        return Role.ATTACK;
+      }
+      case("Role.SEARCH"):{
+        return Role.SEARCH;
+      }
+      case("Role.FLEE"):{
+        return Role.FLEE;
+      }
+      case("Role.REST"):{
+        return Role.REST;
+      }
+      case("Role.HARVEST"):{
+        return Role.HARVEST;
+      }
     }
   }
 }
